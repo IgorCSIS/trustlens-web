@@ -1,12 +1,13 @@
 import { http, createConfig } from "wagmi";
-import { baseSepolia } from "wagmi/chains";
+import { base } from "wagmi/chains";
 import { injected } from "wagmi/connectors";
 
-// Wallet + chain layer. Injected connector = MetaMask / browser wallet.
+// Base mainnet — the app scans real deployed contracts.
+// (Payments are off during free beta; the paywall code targets this chain for later.)
 export const wagmiConfig = createConfig({
-  chains: [baseSepolia],
+  chains: [base],
   connectors: [injected()],
   transports: {
-    [baseSepolia.id]: http("https://sepolia.base.org"),
+    [base.id]: http("https://mainnet.base.org"),
   },
 });

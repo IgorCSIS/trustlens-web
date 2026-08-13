@@ -59,6 +59,11 @@ export function basicScan(address: string, chain = "base-sepolia"): Promise<Scan
   return post<ScanResult>("/scan/address", { address, chain });
 }
 
+/** Free-beta AI deep report (no payment; server enforces FREE_BETA + rate limit). */
+export function fetchReportFree(address: string, chain = "base"): Promise<DeepReport> {
+  return post<DeepReport>("/report/address", { address, chain });
+}
+
 /** PAID AI deep report via a single pay-per-scan payment. */
 export function fetchReport(
   address: string,

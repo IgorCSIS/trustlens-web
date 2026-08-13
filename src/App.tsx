@@ -7,12 +7,16 @@ import { injected } from "wagmi/connectors";
 import { parseEventLogs } from "viem";
 
 import {
-  basicScan, fetchReport, fetchReportWithPass,
+  basicScan, fetchReport, fetchReportFree, fetchReportWithPass,
   type DeepReport, type ScanResult, type TriagedFinding,
 } from "./api";
 import { PAYMENT_GATE, PAYMENT_GATE_ABI } from "./contracts";
 
-const DEFAULT_TARGET = "0x93F37c9af6b4dB4c51DD3CD1a742a4D9AdC878Ca";
+// Base mainnet. Free beta: AI reports are free (server enforces the daily cap).
+// Set VITE_FREE_BETA=0 to turn the paywall on (needs PaymentGate deployed to mainnet).
+const CHAIN = "base";
+const FREE_BETA = import.meta.env.VITE_FREE_BETA !== "0";
+const DEFAULT_TARGET = "";
 const CANCELLED = "No charge. Your report's still here when you want it. Hit the button whenever.";
 
 const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
@@ -117,7 +121,7 @@ export default function App() {
   const { data: passData, refetch: refetchPass } = useReadContract({
     address: PAYMENT_GATE, abi: PAYMENT_GATE_ABI, functionName: "hasActivePass",
     args: address ? [address] : undefined,
-    query: { enabled: isConnected && !!address },
+    query: { enabled: !FREE_BETA && isConnected && !!address },
   });
   const hasPass = passData === true;
 
@@ -132,9 +136,10 @@ export default function App() {
   const busy = payStatus !== "";
 
   async function runBasic() {
+    if (!target.trim()) { setError("Paste a contract address first."); return; }
     setError(null); setReport(null); setBasic(null); setBasicLoading(true);
     try {
-      setBasic(await basicScan(target.trim(), "base-sepolia"));
+      setBasic(await basicScan(target.trim(), CHAIN));
     } catch (e) {
       setError(e instanceof Error ? e.message : "That one didn't go through. Not you, us. Give it another tap.");
     } finally {
@@ -147,6 +152,22 @@ export default function App() {
   }
 
   async function getReport() {
+    if (!target.trim()) { setError("Paste a contract address first."); return; }
+
+    // Free beta: no payment, no wallet needed.
+    if (FREE_BETA) {
+      setError(null); setPayStatus("analyzing");
+      try {
+        setReport(await fetchReportFree(target.trim(), CHAIN));
+      } catch (e) {
+        setError(e instanceof Error ? e.message : "Report failed, try again in a moment.");
+      } finally {
+        setPayStatus("");
+      }
+      return;
+    }
+
+    // Paid mode (FREE_BETA off): pay per scan or use a monthly pass.
     if (!isConnected) { connect({ connector: injected() }); return; }
     if (!publicClient) { setError("No RPC connection. Refresh and try again."); return; }
     setError(null);
@@ -157,7 +178,7 @@ export default function App() {
         const message = `TrustLens: unlock AI report with monthly pass\naddress: ${address}\nissued: ${issued}`;
         const signature = await signMessageAsync({ message });
         setPayStatus("analyzing");
-        setReport(await fetchReportWithPass(target.trim(), message, signature, "base-sepolia"));
+        setReport(await fetchReportWithPass(target.trim(), message, signature, CHAIN));
       } else {
         setPayStatus("paying");
         const price = (await publicClient.readContract({
@@ -173,7 +194,7 @@ export default function App() {
         const paymentId = (logs[0]?.args as { paymentId?: bigint })?.paymentId;
         if (paymentId === undefined) throw new Error("Payment event not found in the receipt");
         setPayStatus("analyzing");
-        setReport(await fetchReport(target.trim(), hash, paymentId.toString(), "base-sepolia"));
+        setReport(await fetchReport(target.trim(), hash, paymentId.toString(), CHAIN));
       }
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Payment failed";
@@ -213,6 +234,7 @@ export default function App() {
     : payStatus === "verifying" ? "Confirming payment…"
     : payStatus === "signing" ? "Sign to verify your pass…"
     : payStatus === "analyzing" ? "Reading the code…"
+    : FREE_BETA ? "Get the AI report · free 🍬"
     : !isConnected ? "Connect wallet to unlock"
     : hasPass ? "Read the AI report"
     : "Get the AI report · $1.50";
@@ -229,7 +251,7 @@ export default function App() {
             <div className="logo">🍭</div>
             <div>
               <div className="word">Trust<b>Lens</b></div>
-              <div className="tag">AI that reads the contract · built on Base</div>
+              <div className="tag">AI that reads the contract · on Base</div>
             </div>
           </div>
           {isConnected && address ? (
@@ -244,8 +266,8 @@ export default function App() {
         <section className="scanner glass">
           <h1>Know before you ape.</h1>
           <p className="sub">
-            Paste any contract address. TrustLens reads the actual code and tells you what's safe,
-            what's not, and exactly how to fix it. Free to scan.
+            Paste any Base contract address. TrustLens reads the actual code and tells you what's safe,
+            what's not, and exactly how to fix it. Free while we're in beta.
           </p>
           <div className="field">
             <label className="addr">
@@ -253,20 +275,20 @@ export default function App() {
               <input value={target} onChange={(e) => setTarget(e.target.value)}
                 spellCheck={false} aria-label="Contract address" placeholder="Paste a contract address (0x...)" />
             </label>
-            <div className="chip"><span className="dot" />Base Sepolia</div>
+            <div className="chip"><span className="dot" />Base</div>
             <button className="btn scanbtn" onClick={runBasic} disabled={basicLoading || busy}>
               {basicLoading ? "Scanning…" : "Scan it free 🍬"}
             </button>
           </div>
           <div className="secondary-cta">
             <button className="linkbtn" onClick={getReport} disabled={busy}>
-              {hasPass ? "Skip to your AI report →" : "Skip to the AI report · $1.50 →"}
+              Skip to the AI report (free) →
             </button>
           </div>
           <div className="price-note">
-            <div>🍬 <b>Instant flags, zero cost</b></div>
+            <div>🍬 <b>Free while in beta</b></div>
             <div>🔍 AI reads the real code</div>
-            <div>🛡️ Fixes, not just warnings</div>
+            <div>🛡️ Copy-paste fixes</div>
           </div>
         </section>
 
@@ -304,17 +326,9 @@ export default function App() {
               <h3>See what these flags actually mean</h3>
               <p>A scanner points at everything and yells. TrustLens reads the code line by line:
                 which flags are real, which are false alarms, and for anything real, a concrete
-                attack example plus a fix you can paste straight in. One report, one price.</p>
+                attack example plus a fix you can paste straight in.</p>
               <button className="btn scanbtn" onClick={getReport} disabled={busy}>{reportBtn}</button>
-              {isConnected && hasPass && <small>🎟️ Your $9 pass is active. Reports are on the house.</small>}
-              {isConnected && !hasPass && (
-                <div className="pass-cta">
-                  Scanning a lot?{" "}
-                  <button className="linkbtn" onClick={buyPass} disabled={busy}>
-                    {payStatus === "buyingpass" ? "Confirm in your wallet…" : "Go unlimited · $9/mo"}
-                  </button>
-                </div>
-              )}
+              {FREE_BETA && <small>Free while we're in beta 🍬</small>}
               <div style={{ marginTop: 14 }}>
                 <button className="linkbtn" onClick={reset} disabled={busy}>Scan another address</button>
               </div>
@@ -322,7 +336,7 @@ export default function App() {
           </section>
         )}
 
-        {/* PAID AI report */}
+        {/* AI report */}
         {rep && (
           <section className="report">
             <div className="verdict glass">
@@ -356,8 +370,8 @@ export default function App() {
             </div>
 
             <div className="access">
-              <div className="jar glass"><span className="tag-sticker tag-live">LIVE</span><div className="em">🍬</div><h3>Deep Report</h3><div className="amt">$1.50</div><small>real risks, false alarms, and the fix</small></div>
-              <div className="jar glass"><span className="tag-sticker tag-live">LIVE</span><div className="em">🎟️</div><h3>All-You-Can-Scan</h3><div className="amt">$9/mo</div><small>unlimited AI reports</small></div>
+              <div className="jar glass"><span className="tag-sticker tag-live">FREE</span><div className="em">🍬</div><h3>Deep Report</h3><div className="amt">Free</div><small>on the house during beta</small></div>
+              <div className="jar glass"><span className="tag-sticker tag-soon">SOON</span><div className="em">🎟️</div><h3>Monthly</h3><div className="amt">$9</div><small>unlimited, when payments switch on</small></div>
               <div className="jar glass"><span className="tag-sticker tag-soon">SOON</span><div className="em">💎</div><h3>Founders Pass</h3><div className="amt">lifetime</div><small>one NFT, every scan, forever</small></div>
             </div>
           </section>
@@ -365,7 +379,7 @@ export default function App() {
 
         <footer>
           TrustLens reads contracts, not tea leaves. Built by <b>@SafuLens</b> on X.<br />
-          Not financial advice. Always verify before you send funds. 🍭
+          Free beta. Not financial advice. Always verify before you send funds. 🍭
         </footer>
       </div>
     </>
