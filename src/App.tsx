@@ -118,7 +118,7 @@ export default function App() {
   const { writeContractAsync } = useWriteContract();
   const { signMessageAsync } = useSignMessage();
 
-  const { data: passData, refetch: refetchPass } = useReadContract({
+  const { data: passData } = useReadContract({
     address: PAYMENT_GATE, abi: PAYMENT_GATE_ABI, functionName: "hasActivePass",
     args: address ? [address] : undefined,
     query: { enabled: !FREE_BETA && isConnected && !!address },
@@ -199,28 +199,6 @@ export default function App() {
     } catch (e) {
       const msg = e instanceof Error ? e.message : "Payment failed";
       setError(/reject/i.test(msg) ? CANCELLED : msg);
-    } finally {
-      setPayStatus("");
-    }
-  }
-
-  async function buyPass() {
-    if (!isConnected) { connect({ connector: injected() }); return; }
-    if (!publicClient) return;
-    setError(null);
-    try {
-      setPayStatus("buyingpass");
-      const price = (await publicClient.readContract({
-        address: PAYMENT_GATE, abi: PAYMENT_GATE_ABI, functionName: "passPrice",
-      })) as bigint;
-      const hash = await writeContractAsync({
-        address: PAYMENT_GATE, abi: PAYMENT_GATE_ABI, functionName: "purchasePass", value: price,
-      });
-      await publicClient.waitForTransactionReceipt({ hash });
-      await refetchPass();
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : "Purchase failed";
-      setError(/reject/i.test(msg) ? "No charge. Grab the pass whenever." : msg);
     } finally {
       setPayStatus("");
     }
