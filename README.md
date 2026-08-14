@@ -77,6 +77,14 @@ Triage plus a fix, in the time it takes to read one Slither report by hand.
 
 Static analysis does the detection. The AI layer does the judgment. The frontend keeps it fast and readable.
 
+## Open source
+
+TrustLens is three repos, the first tool in the [SafuLens](https://x.com/SafuLens) suite:
+
+- **[Frontend](https://github.com/IgorCSIS/trustlens-web)** (this repo) — React + wagmi/viem
+- **[Backend](https://github.com/IgorCSIS/trustlens-backend)** — FastAPI + Slither + web3 + Claude, the proxy resolver and AI triage
+- **[Contracts](https://github.com/IgorCSIS/trustlens-contracts)** — Foundry `PaymentGate`
+
 ## Roadmap
 
 Free beta today. Everything below is built and dark until beta ends.
@@ -87,7 +95,7 @@ Free beta today. Everything below is built and dark until beta ends.
 
 ## License
 
-MIT.
+[MIT](LICENSE)
 
 ---
 
