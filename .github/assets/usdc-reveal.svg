@@ -1,0 +1,83 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two safety scans of the same USDC contract. A raw scanner rates it DANGEROUS 100 of 100. TrustLens reads the code and rates it SAFE-ISH 10 of 100, canonical USDC.">
+  <defs>
+    <linearGradient id="x-ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFF6E9"/>
+      <stop offset="0.45" stop-color="#FFE7EE"/>
+      <stop offset="1" stop-color="#E6F2FF"/>
+    </linearGradient>
+    <linearGradient id="x-safe" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFD23F"/>
+      <stop offset="1" stop-color="#3FCF8E"/>
+    </linearGradient>
+    <linearGradient id="x-pop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF4B5C"/>
+      <stop offset="1" stop-color="#FFD23F"/>
+    </linearGradient>
+    <radialGradient id="x-coin" cx="0.35" cy="0.3" r="0.9">
+      <stop offset="0" stop-color="#8FC9FF"/>
+      <stop offset="1" stop-color="#2775CA"/>
+    </radialGradient>
+    <filter id="x-blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="55"/>
+    </filter>
+    <filter id="x-soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="26" flood-color="#3E2230" flood-opacity="0.16"/>
+    </filter>
+    <clipPath id="x-round"><rect x="0" y="0" width="1600" height="900" rx="0"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#x-round)">
+    <rect x="0" y="0" width="1600" height="900" fill="url(#x-ground)"/>
+    <circle cx="220" cy="140" r="230" fill="#FFD23F" opacity="0.40" filter="url(#x-blur)"/>
+    <circle cx="1420" cy="180" r="230" fill="#FF4B5C" opacity="0.26" filter="url(#x-blur)"/>
+    <circle cx="1350" cy="820" r="250" fill="#BFE3FF" opacity="0.55" filter="url(#x-blur)"/>
+    <circle cx="300" cy="820" r="220" fill="#FFC7D3" opacity="0.5" filter="url(#x-blur)"/>
+
+    <g transform="translate(800,86)">
+      <rect x="-236" y="-30" width="472" height="46" rx="23" fill="#FFFFFF" opacity="0.7"/>
+      <text x="0" y="0" text-anchor="middle" font-family="system-ui,sans-serif" font-size="19" font-weight="800" letter-spacing="2" fill="#3E2230">TRUSTLENS · CONTRACT SAFETY, DECODED</text>
+    </g>
+    <text x="800" y="182" text-anchor="middle" font-family="system-ui,-apple-system,Segoe UI,Roboto,sans-serif" font-size="72" font-weight="800" letter-spacing="-2" fill="#3E2230">Same contract. Opposite verdicts.</text>
+
+    <g filter="url(#x-soft)"><rect x="96" y="256" width="620" height="470" rx="40" fill="#FFFFFF" opacity="0.70"/></g>
+    <rect x="96" y="256" width="620" height="470" rx="40" fill="none" stroke="#FF4B5C" stroke-opacity="0.35" stroke-width="2"/>
+    <text x="406" y="316" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="800" letter-spacing="2" fill="#FF4B5C">RAW SCANNER</text>
+    <path d="M256,510 A150 150 0 0 1 556,510" fill="none" stroke="#F3D9DE" stroke-width="30" stroke-linecap="round"/>
+    <path d="M256,510 A150 150 0 0 1 556,510" fill="none" stroke="#FF4B5C" stroke-width="30" stroke-linecap="round"/>
+    <text x="406" y="500" text-anchor="middle" font-family="system-ui,sans-serif" font-size="118" font-weight="800" fill="#3E2230">100</text>
+    <text x="406" y="540" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#3E2230" opacity="0.55">/ 100 risk</text>
+    <rect x="286" y="572" width="240" height="60" rx="30" fill="#FF4B5C"/>
+    <text x="406" y="612" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="800" fill="#FFF6E9">DANGEROUS</text>
+    <text x="406" y="686" text-anchor="middle" font-family="system-ui,sans-serif" font-size="21" font-weight="600" fill="#3E2230" opacity="0.7">Pattern-matches. Panics.</text>
+
+    <g filter="url(#x-soft)">
+      <circle cx="800" cy="470" r="66" fill="url(#x-coin)"/>
+      <circle cx="800" cy="470" r="66" fill="none" stroke="#FFFFFF" stroke-opacity="0.6" stroke-width="3"/>
+      <text x="800" y="480" text-anchor="middle" font-family="system-ui,sans-serif" font-size="30" font-weight="800" fill="#FFFFFF">USDC</text>
+    </g>
+    <text x="800" y="382" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" font-weight="800" letter-spacing="1" fill="#3E2230" opacity="0.6">ONE ADDRESS</text>
+    <g transform="translate(800,585)">
+      <path d="M-46,0 H40 M24,-14 L48,0 L24,14" fill="none" stroke="#3E2230" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="0" y="46" text-anchor="middle" font-family="system-ui,sans-serif" font-size="17" font-weight="800" letter-spacing="1" fill="#3E2230" opacity="0.65">READS THE CODE</text>
+    </g>
+
+    <g filter="url(#x-soft)"><rect x="884" y="256" width="620" height="470" rx="40" fill="#FFFFFF" opacity="0.82"/></g>
+    <rect x="884" y="256" width="620" height="470" rx="40" fill="none" stroke="#3FCF8E" stroke-opacity="0.55" stroke-width="2"/>
+    <text x="1194" y="316" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="800" letter-spacing="2" fill="#2FA76F">TRUSTLENS</text>
+    <path d="M1044,510 A150 150 0 0 1 1344,510" fill="none" stroke="#E4F3EC" stroke-width="30" stroke-linecap="round"/>
+    <path d="M1044,510 A150 150 0 0 1 1051.3,463.6" fill="none" stroke="url(#x-safe)" stroke-width="30" stroke-linecap="round"/>
+    <text x="1194" y="500" text-anchor="middle" font-family="system-ui,sans-serif" font-size="118" font-weight="800" fill="#3E2230">10</text>
+    <text x="1194" y="540" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#3E2230" opacity="0.55">/ 100 risk</text>
+    <rect x="1074" y="572" width="240" height="60" rx="30" fill="#3FCF8E"/>
+    <text x="1194" y="612" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="800" fill="#0E3D28">SAFE-ISH</text>
+    <text x="1194" y="686" text-anchor="middle" font-family="system-ui,sans-serif" font-size="21" font-weight="600" fill="#3E2230" opacity="0.75">This is canonical USDC. It's fine.</text>
+
+    <g transform="translate(96,806)">
+      <circle cx="26" cy="0" r="26" fill="url(#x-pop)"/>
+      <path d="M26,-26 A26 26 0 0 1 26,26 A13 13 0 0 1 26,0 A7 7 0 0 0 26,-14 A20 20 0 0 0 26,-26 Z" fill="#FFF6E9" opacity="0.9"/>
+      <text x="66" y="9" font-family="system-ui,sans-serif" font-size="30" font-weight="800" letter-spacing="-0.5" fill="#3E2230">TrustLens</text>
+    </g>
+    <text x="800" y="815" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="700" fill="#3E2230" opacity="0.7">Turn fear into truth. Free while we're in beta.</text>
+    <text x="1504" y="815" text-anchor="end" font-family="system-ui,sans-serif" font-size="24" font-weight="800" fill="#FF4B5C">@SafuLens</text>
+  </g>
+</svg>
