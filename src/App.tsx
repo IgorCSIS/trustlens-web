@@ -243,11 +243,13 @@ export default function App() {
           <div className="brand">
             <div className="logo">🍭</div>
             <div>
-              <div className="word">Trust<b>Lens</b></div>
+              <div className="word">Trust<b>Lens</b> <span className="suitetag">a SafuLens tool</span></div>
               <div className="tag">AI that reads the contract · on Base</div>
             </div>
           </div>
-          {isConnected && address ? (
+          {FREE_BETA ? (
+            <div className="nowallet-pill">🔒 No wallet needed</div>
+          ) : isConnected && address ? (
             <button className="btn connect on" onClick={() => disconnect()}>
               {hasPass ? "🎟️ " : ""}{short(address)}
             </button>
@@ -278,7 +280,7 @@ export default function App() {
             <span className="sep">·</span>
             <button className="linkbtn" onClick={getReport} disabled={busy}>Read the AI report →</button>
           </div>
-          <div className="trust-line">🔒 <b>No wallet connect. Ever.</b> Paste an address, that's it.</div>
+          <div className="trust-line">🔒 <b>No wallet, no signup, no catch.</b> Paste an address, that's it.</div>
           <div className="price-note">
             <div>🍬 <b>Free while in beta</b></div>
             <div>🔍 Reads code, not keywords</div>
@@ -384,8 +386,8 @@ export default function App() {
         )}
 
         <footer>
-          TrustLens reads contracts, not tea leaves. Built by <b>@SafuLens</b>.<br />
-          Free beta. Not financial advice. Always verify before you send funds. 🍭
+          TrustLens reads contracts, not tea leaves. A <b>SafuLens</b> tool.<br />
+          Built by @SafuLens · Free beta · Not financial advice. Always verify before you send funds. 🍭
         </footer>
       </div>
     </>
