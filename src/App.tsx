@@ -17,7 +17,9 @@ import { PAYMENT_GATE, PAYMENT_GATE_ABI } from "./contracts";
 const CHAIN = "base";
 const FREE_BETA = import.meta.env.VITE_FREE_BETA !== "0";
 const DEFAULT_TARGET = "";
+const USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"; // canonical USDC on Base, the demo
 const CANCELLED = "No charge. Your report's still here when you want it. Hit the button whenever.";
+const basescanUrl = (a: string) => `https://basescan.org/address/${a}`;
 
 const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 
@@ -37,10 +39,10 @@ function pillClass(v: string) {
 }
 function pillLabel(v: string) {
   const s = v.toLowerCase();
-  if (s.includes("false")) return "False alarm";
-  if (s.includes("minor")) return "Minor";
-  if (s.includes("worth")) return "Worth fixing";
-  return "Real risk";
+  if (s.includes("false")) return "🟢 False alarm";
+  if (s.includes("minor")) return "🔵 Minor";
+  if (s.includes("worth")) return "🟡 Worth fixing";
+  return "🔴 Real risk";
 }
 function impactClass(impact: string) {
   const s = impact.toLowerCase();
@@ -48,6 +50,13 @@ function impactClass(impact: string) {
   if (s.includes("medium")) return "p-watch";
   if (s.includes("low")) return "p-minor";
   return "p-false";
+}
+function impactIcon(impact: string) {
+  const s = impact.toLowerCase();
+  if (s.includes("high")) return "🔴";
+  if (s.includes("medium")) return "🟡";
+  if (s.includes("low")) return "🔵";
+  return "⚪";
 }
 function gaugeColor(v: number) {
   if (v < 20) return "var(--safe)";
@@ -135,16 +144,22 @@ export default function App() {
 
   const busy = payStatus !== "";
 
-  async function runBasic() {
-    if (!target.trim()) { setError("Paste a contract address first."); return; }
+  async function runBasic(addr?: string) {
+    const t = (addr ?? target).trim();
+    if (!t) { setError("Paste a contract address first."); return; }
     setError(null); setReport(null); setBasic(null); setBasicLoading(true);
     try {
-      setBasic(await basicScan(target.trim(), CHAIN));
+      setBasic(await basicScan(t, CHAIN));
     } catch (e) {
       setError(e instanceof Error ? e.message : "That one didn't go through. Not you, us. Give it another tap.");
     } finally {
       setBasicLoading(false);
     }
+  }
+
+  function tryUsdc() {
+    setTarget(USDC);
+    runBasic(USDC);
   }
 
   function reset() {
@@ -245,7 +260,7 @@ export default function App() {
           <h1>Know before you ape.</h1>
           <p className="sub">
             Paste any Base contract address. TrustLens reads the actual code and tells you what's safe,
-            what's not, and exactly how to fix it. Free while we're in beta.
+            what's not, and how to fix it. Free while we're in beta.
           </p>
           <div className="field">
             <label className="addr">
@@ -254,24 +269,29 @@ export default function App() {
                 spellCheck={false} aria-label="Contract address" placeholder="Paste a contract address (0x...)" />
             </label>
             <div className="chip"><span className="dot" />Base</div>
-            <button className="btn scanbtn" onClick={runBasic} disabled={basicLoading || busy}>
+            <button className="btn scanbtn" onClick={() => runBasic()} disabled={basicLoading || busy}>
               {basicLoading ? "Scanning…" : "Scan it free 🍬"}
             </button>
           </div>
           <div className="secondary-cta">
-            <button className="linkbtn" onClick={getReport} disabled={busy}>
-              Skip to the AI report (free) →
-            </button>
+            <button className="linkbtn" onClick={tryUsdc} disabled={basicLoading || busy}>Try it on USDC →</button>
+            <span className="sep">·</span>
+            <button className="linkbtn" onClick={getReport} disabled={busy}>Read the AI report →</button>
           </div>
+          <div className="trust-line">🔒 <b>No wallet connect. Ever.</b> Paste an address, that's it.</div>
           <div className="price-note">
             <div>🍬 <b>Free while in beta</b></div>
-            <div>🔍 AI reads the real code</div>
+            <div>🔍 Reads code, not keywords</div>
             <div>🛡️ Copy-paste fixes</div>
           </div>
         </section>
 
         {(basicLoading || payStatus === "analyzing") && (
-          <section className="loading glass"><div className="lolli" /><div>🔍 Reading every line so you don't have to…</div></section>
+          <section className="loading glass"><div className="lolli" /><div>
+            {payStatus === "analyzing"
+              ? "🧠 Reading the code. This is the part other scanners skip."
+              : "🔍 Reading the contract…"}
+          </div></section>
         )}
         {error && <section className="errbox glass">⚠️ {error}</section>}
 
@@ -282,9 +302,14 @@ export default function App() {
               <Gauge score={basic.risk_score} />
               <div className="vmeta">
                 <span className={`badge ${badgeClass(basic.verdict)}`}>🔍 Quick scan</span>
-                <h2>{basic.findings.length} flag{basic.findings.length === 1 ? "" : "s"} found</h2>
+                <h2>{basic.findings.length === 0
+                  ? "No flags. Clean scan."
+                  : `${basic.findings.length} flag${basic.findings.length === 1 ? "" : "s"}. Here's what's real.`}</h2>
                 <p>Raw flags don't tell you what's real. The AI report sorts the genuine risks from
                   the false alarms, and hands you a fix for anything that bites.</p>
+                <a className="receipt" href={basescanUrl(basic.target)} target="_blank" rel="noreferrer">
+                  {short(basic.target)} · verified on Basescan ↗
+                </a>
               </div>
             </div>
 
@@ -292,7 +317,7 @@ export default function App() {
             <div className="findings">
               {basic.findings.map((f, i) => (
                 <div className="fcard glass" key={i}>
-                  <span className={`pill ${impactClass(f.impact)}`}>{f.impact}</span>
+                  <span className={`pill ${impactClass(f.impact)}`}>{impactIcon(f.impact)} {f.impact}</span>
                   <code className="cname">{f.check}</code>
                   <p className="exp">{f.description.split("\n")[0]}</p>
                 </div>
@@ -325,6 +350,9 @@ export default function App() {
                 {typeof rawScore === "number" && rawScore !== rep.adjusted_risk && (
                   <div className="raw">Raw scanner said <s>{report!.scan.verdict} {rawScore}</s>. We read the code → <b>{rep.adjusted_risk}</b></div>
                 )}
+                <a className="receipt" href={basescanUrl(report!.scan.target)} target="_blank" rel="noreferrer">
+                  {short(report!.scan.target)} · verified on Basescan ↗
+                </a>
               </div>
             </div>
             <div className="flabel">The verdict · {rep.triaged.length} flag{rep.triaged.length === 1 ? "" : "s"}</div>
@@ -356,7 +384,7 @@ export default function App() {
         )}
 
         <footer>
-          TrustLens reads contracts, not tea leaves. Built by <b>@SafuLens</b> on X.<br />
+          TrustLens reads contracts, not tea leaves. Built by <b>@SafuLens</b>.<br />
           Free beta. Not financial advice. Always verify before you send funds. 🍭
         </footer>
       </div>

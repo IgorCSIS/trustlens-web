@@ -94,12 +94,20 @@ header { display: flex; align-items: center; justify-content: space-between; gap
 .price-note { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 16px; font-size: 12.5px; color: var(--ink-soft); font-weight: 700; }
 .price-note b { color: var(--ink); }
 
-.secondary-cta { margin-top: 14px; }
+.secondary-cta { margin-top: 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.sep { color: var(--ink-faint); font-weight: 800; }
 .linkbtn { cursor: pointer; background: none; border: none; padding: 0; font-family: var(--font-display); font-weight: 600; font-size: 13.5px; color: var(--red-deep); letter-spacing: .1px; transition: filter .15s; }
 .linkbtn:hover { filter: brightness(1.15); text-decoration: underline; }
 .linkbtn:disabled { opacity: .5; cursor: not-allowed; }
 :root[data-theme="dark"] .linkbtn, :root:not([data-theme="light"]) .linkbtn { color: var(--red); }
 .pass-cta { margin-top: 12px; font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+
+.trust-line { margin-top: 15px; display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+.trust-line b { color: var(--safe-ink); }
+:root[data-theme="dark"] .trust-line b, :root:not([data-theme="light"]) .trust-line b { color: var(--safe); }
+
+.receipt { display: inline-block; margin-top: 12px; font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--ink-soft); text-decoration: none; border-bottom: 1px dashed var(--glass-brd); transition: color .15s; }
+.receipt:hover { color: var(--ink); }
 
 .loading { display: flex; align-items: center; gap: 14px; padding: 26px 30px; margin-bottom: 26px; font-weight: 700; }
 .lolli { width: 34px; height: 34px; border-radius: 50%; background: conic-gradient(var(--red), var(--yellow), var(--red), var(--yellow), var(--red)); animation: spin 1s linear infinite; box-shadow: inset 0 0 0 6px rgba(255, 255, 255, .55); flex: 0 0 auto; }
