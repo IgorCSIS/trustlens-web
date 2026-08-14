@@ -41,14 +41,14 @@
 
     <g filter="url(#x-soft)"><rect x="96" y="256" width="620" height="470" rx="40" fill="#FFFFFF" opacity="0.70"/></g>
     <rect x="96" y="256" width="620" height="470" rx="40" fill="none" stroke="#FF4B5C" stroke-opacity="0.35" stroke-width="2"/>
-    <text x="406" y="316" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="800" letter-spacing="2" fill="#FF4B5C">RAW SCANNER</text>
+    <text x="406" y="316" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="800" letter-spacing="2" fill="#FF4B5C">RAW FLAGS</text>
     <path d="M256,510 A150 150 0 0 1 556,510" fill="none" stroke="#F3D9DE" stroke-width="30" stroke-linecap="round"/>
-    <path d="M256,510 A150 150 0 0 1 556,510" fill="none" stroke="#FF4B5C" stroke-width="30" stroke-linecap="round"/>
-    <text x="406" y="500" text-anchor="middle" font-family="system-ui,sans-serif" font-size="118" font-weight="800" fill="#3E2230">100</text>
+    <path d="M256,510 A150 150 0 0 1 497.9,391.5" fill="none" stroke="#FF4B5C" stroke-width="30" stroke-linecap="round"/>
+    <text x="406" y="500" text-anchor="middle" font-family="system-ui,sans-serif" font-size="118" font-weight="800" fill="#3E2230">71</text>
     <text x="406" y="540" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#3E2230" opacity="0.55">/ 100 risk</text>
     <rect x="286" y="572" width="240" height="60" rx="30" fill="#FF4B5C"/>
     <text x="406" y="612" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="800" fill="#FFF6E9">DANGEROUS</text>
-    <text x="406" y="686" text-anchor="middle" font-family="system-ui,sans-serif" font-size="21" font-weight="600" fill="#3E2230" opacity="0.7">Pattern-matches. Panics.</text>
+    <text x="406" y="686" text-anchor="middle" font-family="system-ui,sans-serif" font-size="21" font-weight="600" fill="#3E2230" opacity="0.7">Every flag looks urgent.</text>
 
     <g filter="url(#x-soft)">
       <circle cx="800" cy="470" r="66" fill="url(#x-coin)"/>
@@ -58,19 +58,19 @@
     <text x="800" y="382" text-anchor="middle" font-family="system-ui,sans-serif" font-size="16" font-weight="800" letter-spacing="1" fill="#3E2230" opacity="0.6">ONE ADDRESS</text>
     <g transform="translate(800,585)">
       <path d="M-46,0 H40 M24,-14 L48,0 L24,14" fill="none" stroke="#3E2230" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="0" y="46" text-anchor="middle" font-family="system-ui,sans-serif" font-size="17" font-weight="800" letter-spacing="1" fill="#3E2230" opacity="0.65">READS THE CODE</text>
+      <text x="0" y="46" text-anchor="middle" font-family="system-ui,sans-serif" font-size="17" font-weight="800" letter-spacing="1" fill="#3E2230" opacity="0.65">FOLLOWS THE PROXY TO THE REAL CODE</text>
     </g>
 
     <g filter="url(#x-soft)"><rect x="884" y="256" width="620" height="470" rx="40" fill="#FFFFFF" opacity="0.82"/></g>
     <rect x="884" y="256" width="620" height="470" rx="40" fill="none" stroke="#3FCF8E" stroke-opacity="0.55" stroke-width="2"/>
     <text x="1194" y="316" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" font-weight="800" letter-spacing="2" fill="#2FA76F">TRUSTLENS</text>
     <path d="M1044,510 A150 150 0 0 1 1344,510" fill="none" stroke="#E4F3EC" stroke-width="30" stroke-linecap="round"/>
-    <path d="M1044,510 A150 150 0 0 1 1051.3,463.6" fill="none" stroke="url(#x-safe)" stroke-width="30" stroke-linecap="round"/>
-    <text x="1194" y="500" text-anchor="middle" font-family="system-ui,sans-serif" font-size="118" font-weight="800" fill="#3E2230">10</text>
+    <path d="M1044,510 A150 150 0 0 1 1087.9,403.9" fill="none" stroke="url(#x-safe)" stroke-width="30" stroke-linecap="round"/>
+    <text x="1194" y="500" text-anchor="middle" font-family="system-ui,sans-serif" font-size="118" font-weight="800" fill="#3E2230">25</text>
     <text x="1194" y="540" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#3E2230" opacity="0.55">/ 100 risk</text>
-    <rect x="1074" y="572" width="240" height="60" rx="30" fill="#3FCF8E"/>
-    <text x="1194" y="612" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="800" fill="#0E3D28">SAFE-ISH</text>
-    <text x="1194" y="686" text-anchor="middle" font-family="system-ui,sans-serif" font-size="21" font-weight="600" fill="#3E2230" opacity="0.75">This is canonical USDC. It's fine.</text>
+    <rect x="1074" y="572" width="240" height="60" rx="30" fill="#FFD23F"/>
+    <text x="1194" y="612" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" font-weight="800" fill="#3E2230">CAUTION</text>
+    <text x="1194" y="686" text-anchor="middle" font-family="system-ui,sans-serif" font-size="21" font-weight="600" fill="#3E2230" opacity="0.75">Canonical USDC. Admin can upgrade it.</text>
 
     <g transform="translate(96,806)">
       <circle cx="26" cy="0" r="26" fill="url(#x-pop)"/>

@@ -23,9 +23,9 @@ Paste any contract address on Base. TrustLens pulls the verified source, runs a 
 
 Here is the part that matters.
 
-Point a raw scanner at Circle's USDC and it lights up like a fire alarm: **DANGEROUS, 100 out of 100.** Blocklists, upgradeable proxies, privileged roles, the works. Technically present. Completely misread.
+Point a raw scanner at Circle's USDC and the flags light up like a fire alarm: **DANGEROUS, 71 out of 100.** Blocklists, upgradeable proxies, privileged roles, the works. Technically present. Completely misread.
 
-TrustLens reads the same code and tells you the truth: **SAFE-ISH, 10 out of 100. This is canonical USDC.** The privileged functions are Circle's, they are expected, and they are not going to drain your wallet.
+TrustLens follows the proxy to the real FiatToken implementation and reads that code, then tells you the truth: **CAUTION, 25 out of 100. This is canonical USDC.** Battle-tested, the privileged functions are Circle's and are expected, and the one thing worth knowing is that its admin is a single key that can upgrade the logic. Now you know exactly what you are trusting.
 
 That gap between "flag exists" and "flag matters" is where people get scared out of good contracts and lured into bad ones. TrustLens lives in that gap.
 
@@ -53,7 +53,7 @@ You stop drowning in red. You start seeing what is actually dangerous.
 
 No wallet connection required to scan. No signup to read the report. Free while we are in beta.
 
-Start with USDC if you want to watch a raw "100/100 DANGEROUS" verdict get taken apart line by line.
+Start with USDC if you want to watch raw flags scream DANGEROUS on the real implementation and then get taken apart line by line.
 
 ## For developers
 
