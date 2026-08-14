@@ -33,7 +33,9 @@ export interface AIReport {
   headline: string;
   adjusted_risk: number;
   verdict: string;
+  limitations?: string[]; // what this analysis did NOT check
   triaged: TriagedFinding[];
+  disclaimer?: string; // scope + not-an-audit notice, set server-side
 }
 
 export interface DeepReport {

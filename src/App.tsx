@@ -373,6 +373,19 @@ export default function App() {
               ))}
             </div>
 
+            <div className="scope glass">
+              <div className="scope-head">🔎 Triage, not an audit</div>
+              {rep.limitations && rep.limitations.length > 0 && (
+                <>
+                  <div className="scope-sub">What this scan did <b>not</b> check</div>
+                  <ul className="scope-list">
+                    {rep.limitations.map((l, i) => <li key={i}>{l}</li>)}
+                  </ul>
+                </>
+              )}
+              <p className="scope-note">{rep.disclaimer || "Automated triage using static analysis and AI review. Not a professional security audit. It cannot guarantee a contract is safe. Do not make financial decisions based on this report alone."}</p>
+            </div>
+
             <div style={{ textAlign: "center", marginTop: 20 }}>
               <button className="btn scanbtn" onClick={reset} disabled={busy} style={{ display: "inline-flex" }}>Scan another address</button>
             </div>

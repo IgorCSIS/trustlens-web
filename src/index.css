@@ -191,6 +191,13 @@ header { display: flex; align-items: center; justify-content: space-between; gap
 .tag-live { background: linear-gradient(150deg, var(--safe), #12946a); box-shadow: 0 5px 10px rgba(38, 185, 128, .35); }
 .tag-soon { background: linear-gradient(150deg, var(--yellow-deep), var(--red)); box-shadow: 0 5px 10px rgba(232, 50, 74, .35); }
 
+.scope { margin-top: 16px; padding: 18px 22px; }
+.scope-head { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink); }
+.scope-sub { font-size: 11px; font-weight: 800; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .6px; margin-top: 10px; }
+.scope-list { margin: 8px 0 12px; padding-left: 20px; }
+.scope-list li { margin: 4px 0; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.scope-note { font-size: 12.5px; color: var(--ink-soft); font-weight: 600; line-height: 1.6; margin: 0; }
+
 footer { text-align: center; margin-top: 40px; font-size: 12.5px; color: var(--ink-soft); font-weight: 700; line-height: 1.7; }
 footer b { color: var(--ink); }
 
