@@ -8,7 +8,7 @@ import { parseEventLogs } from "viem";
 
 import {
   basicScan, fetchReport, fetchReportFree, fetchReportWithPass,
-  type DeepReport, type ScanResult, type TriagedFinding,
+  type DeepReport, type ProxyInfo, type ScanResult, type TriagedFinding,
 } from "./api";
 import { PAYMENT_GATE, PAYMENT_GATE_ABI } from "./contracts";
 
@@ -26,6 +26,7 @@ const short = (a: string) => `${a.slice(0, 6)}…${a.slice(-4)}`;
 function badgeClass(v: string) {
   const s = v.toUpperCase();
   if (s.includes("DANGER")) return "danger";
+  if (/UNVERIFIED|UNRESOLVED|COULD NOT|INCOMPLETE|UNKNOWN/.test(s)) return "caution";
   if (s.includes("RISK")) return "risky";
   if (s.includes("CAUTION")) return "caution";
   return "safe";
@@ -62,6 +63,36 @@ function gaugeColor(v: number) {
   if (v < 20) return "var(--safe)";
   if (v < 45) return "var(--watch)";
   return "var(--critical)";
+}
+
+function ProxyBanner({ p }: { p: ProxyInfo }) {
+  if (!p.state_read_ok) {
+    return (
+      <div className="proxybar glass warn">
+        <span className="proxytag">⚠️ Proxy state unverified</span>
+        <p>{p.note || "We could not read this contract's on-chain proxy state, so we cannot confirm the code shown is the code that runs."}</p>
+      </div>
+    );
+  }
+  if (!p.is_proxy) return null;
+  const adminTxt = p.admin
+    ? `${short(p.admin)} (${p.admin_is_contract ? "a contract, likely a multisig" : "an EOA, a single key"})`
+    : "unknown";
+  return (
+    <div className={`proxybar glass ${p.implementation_scanned ? "" : "warn"}`}>
+      <span className="proxytag">🧭 Proxy contract</span>
+      {p.implementation_scanned && p.implementation_address ? (
+        <p>
+          This address is an upgradeable <b>{p.proxy_type}</b> proxy. We followed it to the real
+          implementation at{" "}
+          <a href={basescanUrl(p.implementation_address)} target="_blank" rel="noreferrer">{short(p.implementation_address)}</a>
+          {" "}and scanned that, not the shell. Upgrade control: <b>{adminTxt}</b>, who can replace the logic after this scan.
+        </p>
+      ) : (
+        <p>{p.note || "This is a proxy, but its real implementation could not be analyzed."} Treat it as unknown until the implementation is verified.</p>
+      )}
+    </div>
+  );
 }
 
 function Gauge({ score }: { score: number }) {
@@ -315,6 +346,8 @@ export default function App() {
               </div>
             </div>
 
+            {basic.proxy && <ProxyBanner p={basic.proxy} />}
+
             <div className="flabel">The raw flags</div>
             <div className="findings">
               {basic.findings.map((f, i) => (
@@ -357,6 +390,7 @@ export default function App() {
                 </a>
               </div>
             </div>
+            {report!.scan.proxy && <ProxyBanner p={report!.scan.proxy} />}
             <div className="flabel">The verdict · {rep.triaged.length} flag{rep.triaged.length === 1 ? "" : "s"}</div>
             <div className="findings">
               {rep.triaged.map((f, i) => (

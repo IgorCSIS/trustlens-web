@@ -191,6 +191,14 @@ header { display: flex; align-items: center; justify-content: space-between; gap
 .tag-live { background: linear-gradient(150deg, var(--safe), #12946a); box-shadow: 0 5px 10px rgba(38, 185, 128, .35); }
 .tag-soon { background: linear-gradient(150deg, var(--yellow-deep), var(--red)); box-shadow: 0 5px 10px rgba(232, 50, 74, .35); }
 
+.proxybar { margin: 0 0 16px; padding: 15px 20px; display: flex; flex-direction: column; gap: 6px; }
+.proxybar.warn { border-color: var(--critical); }
+.proxytag { font-family: var(--font-display); font-weight: 600; font-size: 13px; color: var(--ink); letter-spacing: .2px; }
+.proxybar.warn .proxytag { color: var(--critical-ink); }
+.proxybar p { margin: 0; font-size: 13.5px; color: var(--ink-soft); font-weight: 600; line-height: 1.55; }
+.proxybar a { color: var(--red-deep); font-weight: 700; text-decoration: none; border-bottom: 1px dashed var(--glass-brd); }
+:root[data-theme="dark"] .proxybar a, :root:not([data-theme="light"]) .proxybar a { color: var(--red); }
+
 .scope { margin-top: 16px; padding: 18px 22px; }
 .scope-head { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink); }
 .scope-sub { font-size: 11px; font-weight: 800; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .6px; margin-top: 10px; }

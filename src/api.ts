@@ -9,6 +9,20 @@ export interface Finding {
   lines: number[];
 }
 
+export interface ProxyInfo {
+  is_proxy: boolean;
+  proxy_type: string;
+  proxy_address: string;
+  implementation_address: string | null;
+  scanned_address: string;
+  implementation_scanned: boolean;
+  admin: string | null;
+  admin_is_contract: boolean | null;
+  beacon: string | null;
+  state_read_ok: boolean;
+  note: string;
+}
+
 export interface ScanResult {
   target: string;
   engine: string;
@@ -16,6 +30,7 @@ export interface ScanResult {
   verdict: string;
   summary: Record<string, number>;
   findings: Finding[];
+  proxy?: ProxyInfo | null;
 }
 
 export interface TriagedFinding {
