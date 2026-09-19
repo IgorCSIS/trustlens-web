@@ -15,6 +15,8 @@
 
 ---
 
+# TrustLens: proxy-aware contract safety scanning on Base
+
 > **Know before you ape.** TrustLens reads a contract's real code and tells you what's safe, what's not, and how to fix it.
 
 ## What it does
@@ -79,11 +81,12 @@ Static analysis does the detection. The AI layer does the judgment. The frontend
 
 ## Open source
 
-TrustLens is three repos, the first tool in the [SafuLens](https://x.com/SafuLens) suite:
+TrustLens is four repos, the first tool in the [SafuLens](https://x.com/SafuLens) suite:
 
-- **[Frontend](https://github.com/IgorCSIS/trustlens-web)** (this repo) — React + wagmi/viem
-- **[Backend](https://github.com/IgorCSIS/trustlens-backend)** — FastAPI + Slither + web3 + Claude, the proxy resolver and AI triage
-- **[Contracts](https://github.com/IgorCSIS/trustlens-contracts)** — Foundry `PaymentGate`
+- **[Frontend](https://github.com/IgorCSIS/trustlens-web)** (this repo): React + wagmi/viem
+- **[Backend](https://github.com/IgorCSIS/trustlens-backend)**: FastAPI, Slither, web3, the proxy resolver and the AI triage layer
+- **[Contracts](https://github.com/IgorCSIS/trustlens-contracts)**: Foundry `PaymentGate`, dark during the free beta
+- **[Keepwarm](https://github.com/IgorCSIS/trustlens-keepwarm)**: a cron that pings the backend so Render's free tier never cold-starts
 
 ## Roadmap
 

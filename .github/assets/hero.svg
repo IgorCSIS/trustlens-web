@@ -1,4 +1,4 @@
-<svg width="1280" height="360" viewBox="0 0 1280 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TrustLens. AI that reads a contract's real code. Raw scanners say DANGEROUS 100. TrustLens says SAFE-ISH 10, canonical USDC.">
+<svg width="1280" height="360" viewBox="0 0 1280 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TrustLens. AI that reads a contract's real code. A raw scanner says DANGEROUS 71. TrustLens says CAUTION 25, canonical USDC whose admin can upgrade it.">
   <defs>
     <linearGradient id="tl-ground" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#FFF6E9"/>
