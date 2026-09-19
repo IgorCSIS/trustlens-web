@@ -1,7 +1,7 @@
 // Deployed PaymentGate on Base Sepolia (M1).
 export const PAYMENT_GATE = "0x93F37c9af6b4dB4c51DD3CD1a742a4D9AdC878Ca" as const;
 
-// Minimal ABI — just what the frontend needs: read the price, pay for a scan,
+// Minimal ABI. Just what the frontend needs: read the price, pay for a scan,
 // and read the emitted event.
 export const PAYMENT_GATE_ABI = [
   {

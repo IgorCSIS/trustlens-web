@@ -36,7 +36,7 @@ npm run preview   # serves dist/ locally
 The app runs on **Base mainnet** and scans real contracts. It's a **free beta**:
 AI reports are free (server rate-limits them). No wallet needed to use it.
 
-- `VITE_FREE_BETA` — leave unset (or `1`) for the free beta. Set `0` to turn the
+- `VITE_FREE_BETA`: leave unset (or `1`) for the free beta. Set `0` to turn the
   paywall on. That also requires `PaymentGate` deployed to Base mainnet (update
   the address in `src/contracts.ts`) and the backend's `FREE_BETA=0`.
 - Turning on real payments is a real launch: get the contract audited first.

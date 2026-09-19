@@ -71,7 +71,7 @@ async function post<T>(path: string, body: unknown): Promise<T> {
   return res.json();
 }
 
-/** FREE basic scan — rule-based findings only, no payment. */
+/** FREE basic scan. Rule-based findings only, no payment. */
 export function basicScan(address: string, chain = "base-sepolia"): Promise<ScanResult> {
   return post<ScanResult>("/scan/address", { address, chain });
 }

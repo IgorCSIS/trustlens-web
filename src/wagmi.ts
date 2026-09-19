@@ -2,7 +2,7 @@ import { http, createConfig } from "wagmi";
 import { base } from "wagmi/chains";
 import { injected } from "wagmi/connectors";
 
-// Base mainnet — the app scans real deployed contracts.
+// Base mainnet. The app scans real deployed contracts.
 // (Payments are off during free beta; the paywall code targets this chain for later.)
 export const wagmiConfig = createConfig({
   chains: [base],

@@ -83,6 +83,11 @@ Static analysis does the detection. The AI layer does the judgment. The frontend
 
 TrustLens is four repos, the first tool in the [SafuLens](https://x.com/SafuLens) suite:
 
+<p align="center">
+  <img src=".github/assets/repos.svg" alt="The four TrustLens repositories. trustlens-web posts scan and report requests to trustlens-backend, which reads Base and an AI triage API. trustlens-keepwarm requests the backend health endpoint every ten minutes. trustlens-contracts holds PaymentGate on Base Sepolia, and both payment arrows are dashed because they are switched off while the scanner is in free beta." width="880">
+</p>
+
+
 - **[Frontend](https://github.com/IgorCSIS/trustlens-web)** (this repo): React + wagmi/viem
 - **[Backend](https://github.com/IgorCSIS/trustlens-backend)**: FastAPI, Slither, web3, the proxy resolver and the AI triage layer
 - **[Contracts](https://github.com/IgorCSIS/trustlens-contracts)**: Foundry `PaymentGate`, dark during the free beta
@@ -90,11 +95,23 @@ TrustLens is four repos, the first tool in the [SafuLens](https://x.com/SafuLens
 
 ## Roadmap
 
-Free beta today. Everything below is built and dark until beta ends.
+Free beta today.
 
-- **Pay-per-scan.** $1.50 a scan, no subscription.
-- **Unlimited.** $9 a month for traders and devs who scan all day.
-- **Founders NFT.** For the people who showed up early.
+Built and deployed, waiting on a switch:
+
+- **Pay-per-scan.** One deep report, one address, no subscription.
+- **Unlimited.** A monthly pass, for traders and devs who scan all day.
+
+Both live in `PaymentGate` on Base Sepolia, and the backend already knows how
+to verify a payment against it. Turning them on is a config change, not a
+build. Prices are not fixed yet, so the numbers here are deliberately absent
+rather than invented.
+
+Not built yet:
+
+- **Founders Pass.** A lifetime NFT for the people who showed up early. There
+  is no contract for it, which is why the app marks it SOON rather than
+  taking anybody's money.
 
 ## License
 
